@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="src/styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,500,0,0&icon_names=upload" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  <title>Rezy Photo Editor</title>
+</head>
+<body>
+  <header>
+    <div id="name-of-site" class="header">Rezy's photo editor</div>
+  </header>
+  <main>
+    <section id="images" class="images-container">
+      <div id="original-photo" style="display: flex; flex-direction: column; gap:20px;">
+        <div class="disabled loader" id="original-spinner"></div>
+        <img src="public/Bella.jpg" alt="original image" class="image" id="original-image">
+      </div>
+      <div id="changed-photo" style="display: flex; flex-direction: column; gap:20px;">
+        <div class="disabled loader" id="changed-spinner"></div>
+        <img src="public/Bella.jpg" alt="changed image" class="image" id="changed-image">
+      </div>
+    </section>
+    <div id="separator" class="separator"></div>
+    <section id="settings" class="settings-container">
+      <div class="flex-row-gap-20">
+        <label class="image-uploader">
+          <input type="file" id="image-input"/>
+          <img src="public/upload.svg" alt="upload icon" class="upload-icon">
+          Upload your photo
+        </label>
+      </div>
+      <div class="container">
+        <label id="toGrayScale" class="containerLabel">
+          To GrayScale
+          <input type="checkbox" id="grayScale">
+        </label>
+      </div>
+      </section>
+  </main>
+  <script defer src="src/main.js" />
+  <script src="https://cdn.jsdelivr.net/npm/exifr/dist/lite.umd.js"></script>
+</body>
+</html>

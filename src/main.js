@@ -1,4 +1,4 @@
-const imageOperation = (image, callback, id, holderId, spinner) => {
+const imageOperation = (image, callback, id, holderId, spinner, stack) => {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
 
@@ -29,6 +29,7 @@ const imageOperation = (image, callback, id, holderId, spinner) => {
     holder.appendChild(obj);
 
     spinner.classList.add('disabled')
+    if (stack !== undefined) stack.push(blob);
   }, 'image/jpeg');
 
 }
@@ -51,7 +52,18 @@ const makeHistogram = () => {}
 
 const changeBrightness = () => {}
 
-const toNegative = () => {}
+const toNegative = (pixels) => {
+  for (let i = 0; i < pixels.length; i += 4) {
+    const red = 255 - pixels[i];
+    const green = 255 - pixels[i + 1];
+    const blue = 255 - pixels[i + 2];
+    // const alpha = pixels[i + 3];
+
+    pixels[i] = red;
+    pixels[i + 1] = green;
+    pixels[i + 2] = blue;
+  }
+}
 
 const toBinaryColorScheme = () => {}
 
@@ -65,9 +77,7 @@ const kvantation = () => {}
 
 const pseudoColoring = () => {}
 
-const processFile = (photo, status, isNewPhoto) => {
-  console.info('Started processing')
-
+const processFile = (photo, isNewPhoto, operation, stack) => {
   const originalSpinner = document.getElementById('original-spinner');
   const changedSpinner = document.getElementById('changed-spinner');
   
@@ -87,12 +97,6 @@ const processFile = (photo, status, isNewPhoto) => {
   const reader = new FileReader();
   
   reader.onload = (e) => {
-    if (status === 'GrayScale') {
-      operation = toGrayScale;
-    } else {
-      operation = null;
-    }
-
     if (isNewPhoto) {
       const orig = new Image();
       orig.onload = () => {
@@ -103,7 +107,7 @@ const processFile = (photo, status, isNewPhoto) => {
 
     const changed = new Image();
     changed.onload = () => {
-      imageOperation(changed, operation, 'changed-image', 'changed-photo', changedSpinner);
+      imageOperation(changed, operation, 'changed-image', 'changed-photo', changedSpinner, stack);
     }
     changed.src = e.target.result;
   }
@@ -112,10 +116,7 @@ const processFile = (photo, status, isNewPhoto) => {
 }
 
 (() => {
-
-  let status = null;
-  let operation = null;
-  let photo = null;
+  const stack = [];
 
   const imageInput = document.querySelector('.image-uploader')
   imageInput.addEventListener('input', (e) => {
@@ -123,21 +124,47 @@ const processFile = (photo, status, isNewPhoto) => {
     const types = ['image/jpeg', 'image/png'];
     if (!file || !types.includes(file.type)) return;
 
-    photo = file;
+    while (stack.length !== 0) {
+      stack.pop();
+    }
+    stack.push(new File([file], file.name, { type: file.type }));
 
-    processFile(photo, status, true);
+    processFile(file, true);
   });
 
-  const toGrayScaleCheckBox = document.getElementById('toGrayScale');
-  toGrayScaleCheckBox.addEventListener('click', (e) => {
-    if (e.target.checked) {
-      status = 'GrayScale'
-    } else {
-      status = null;
+  const toGrayScaleButton = document.querySelector('#grayScale');
+  toGrayScaleButton.addEventListener('click', () => {
+    if (stack.length === 0) {
+      return;
     }
 
-    if (photo !== null) {
-      processFile(photo, status, false);
-    }
+    const photo = stack[stack.length - 1];
+
+    processFile(photo, false, toGrayScale, stack);
   })
+
+  const toNegativeButton = document.querySelector('#negative');
+  toNegativeButton.addEventListener('click', () => {
+    if (stack.length === 0) {
+      return;
+    }
+
+    const photo = stack[stack.length - 1];
+
+    processFile(photo, false, toNegative, stack);
+  })
+
+  const cancelButton = document.querySelector('#cancel');
+  cancelButton.addEventListener('click', () => {
+    if (stack.length === 0 || stack.length === 1) {
+      return;
+    }
+
+    stack.pop();
+    const photo = stack[stack.length - 1];
+
+    processFile(photo, false, null, stack);
+    stack.pop();
+  })
+
 })()

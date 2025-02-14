@@ -84,15 +84,16 @@ const toGrayScale = (pixels) => {
   }
 }
 
-const makeHistogram = () => {}
+const makeHistogram = (pixels) => {}
 
-const changeBrightness = () => {}
+const changeBrightness = (pixels) => {
+  const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+  const brightness = document.querySelector("#brightness-slider").value;
 
-const toNegative = (pixels) => {
   for (let i = 0; i < pixels.length; i += 4) {
-    const red = 255 - pixels[i];
-    const green = 255 - pixels[i + 1];
-    const blue = 255 - pixels[i + 2];
+    const red = clamp(pixels[i] + brightness, 0, 255);
+    const green = clamp(pixels[i + 1] + brightness, 0, 255);
+    const blue = clamp(pixels[i + 2] + brightness, 0, 255);
     // const alpha = pixels[i + 3];
 
     pixels[i] = red;
@@ -101,17 +102,32 @@ const toNegative = (pixels) => {
   }
 }
 
-const toBinaryColorScheme = () => {}
+const toNegative = (pixels) => {
+  const negative = document.querySelector("#negative-slider").value;
 
-const moreContrast = () => {}
+  for (let i = 0; i < pixels.length; i += 4) {
+    const red = pixels[i] >= negative ? 255 - pixels[i] : pixels[i];
+    const green = pixels[i + 1] >= negative ? 255 - pixels[i + 1] : pixels[i + 1];
+    const blue = pixels[i + 2] >= negative ? 255 - pixels[i + 2] : pixels[i + 2];
+    // const alpha = pixels[i + 3];
 
-const lessContrast = () => {}
+    pixels[i] = red;
+    pixels[i + 1] = green;
+    pixels[i + 2] = blue;
+  }
+}
 
-const gamma = () => {}
+const toBinaryColorScheme = (pixels) => {}
 
-const kvantation = () => {}
+const moreContrast = (pixels) => {}
 
-const pseudoColoring = () => {}
+const lessContrast = (pixels) => {}
+
+const gamma = (pixels) => {}
+
+const kvantation = (pixels) => {}
+
+const pseudoColoring = (pixels) => {}
 
 function storage() {
   const stack = [];
@@ -132,7 +148,7 @@ function storage() {
   }
 
   function revert() {
-    if (ptr > 1) {
+    if (ptr > 0) {
       --ptr;
     }
   }
@@ -171,6 +187,9 @@ const processFile = (operation) => {
       break;
     case 'negative':
       toOperate = toNegative;
+      break;
+    case 'bright':
+      toOperate = changeBrightness;
       break;
     case 'revert':
       photoStack.revert();

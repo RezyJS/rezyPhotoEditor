@@ -131,7 +131,7 @@ main {
   flex-direction: column;
   gap: 20px;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   color: #F1E3E4;
 }
 
@@ -183,4 +183,16 @@ body.loaded {
   visibility: visible;
   opacity: 1;
   transition: opacity 0.3s ease;
+}
+
+.slider-container {
+  margin: 20px;
+  padding: 10px;
+}
+
+.value-display {
+  display: block;
+  margin-left: 10px;
+  font-size: 18px;
+  min-width: 40px;
 }

@@ -7,6 +7,25 @@ window.addEventListener('load', () => {
 });
 
 const main = () => {
+  const negativeSlider = document.querySelector("#negative-slider");
+  const negativeOutput = document.querySelector("#negative-slider-value");
+  negativeOutput.innerHTML = negativeSlider.value;
+  negativeSlider.oninput = function() {
+    negativeOutput.innerHTML = this.value;
+  }
+
+  const brightnessSlider = document.querySelector("#brightness-slider");
+  const brightnessOutput = document.querySelector("#brightness-slider-value");
+  brightnessOutput.innerHTML = brightnessSlider.value;
+  brightnessSlider.oninput = function() {
+    brightnessOutput.innerHTML = this.value;
+  }
+  
+  const brightnessButton = document.querySelector('#brightness-btn');
+  brightnessButton.addEventListener('click', () => {
+    processFile('bright')
+  })
+
   const revertButton = document.querySelector('#prev-state-btn'); 
   revertButton.addEventListener('click', () => {
     processFile('revert')

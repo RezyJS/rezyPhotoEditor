@@ -52,7 +52,7 @@ const imageOperation = (image, callback, spinner) => {
         [...ev.dataTransfer.items].forEach((item) => {
           if (item.kind === 'file' && item.type.startsWith('image/')) {
             const file = item.getAsFile();
-            loadPhoto(file); // Load the dropped image
+            loadNewPhoto(file); // Load the dropped image
           }
         });
       }
@@ -87,13 +87,13 @@ const toGrayScale = (pixels) => {
 const makeHistogram = (pixels) => {}
 
 const changeBrightness = (pixels) => {
-  const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+  const clamp = (num) => Math.min(Math.max(num, 0), 255);
   const brightness = document.querySelector("#brightness-slider").value;
 
   for (let i = 0; i < pixels.length; i += 4) {
-    const red = clamp(pixels[i] + brightness, 0, 255);
-    const green = clamp(pixels[i + 1] + brightness, 0, 255);
-    const blue = clamp(pixels[i + 2] + brightness, 0, 255);
+    const red = clamp(pixels[i] + brightness);
+    const green = clamp(pixels[i + 1] + brightness);
+    const blue = clamp(pixels[i + 2] + brightness);
     // const alpha = pixels[i + 3];
 
     pixels[i] = red;

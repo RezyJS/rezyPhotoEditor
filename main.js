@@ -14,6 +14,13 @@ const main = () => {
     negativeOutput.innerHTML = this.value;
   }
 
+  const binarySlider = document.querySelector("#binary-slider");
+  const binaryOutput = document.querySelector("#binary-slider-value");
+  binaryOutput.innerHTML = binarySlider.value;
+  binarySlider.oninput = function() {
+    binaryOutput.innerHTML = this.value;
+  }
+
   const brightnessSlider = document.querySelector("#brightness-slider");
   const brightnessOutput = document.querySelector("#brightness-slider-value");
   brightnessOutput.innerHTML = brightnessSlider.value;
@@ -44,6 +51,11 @@ const main = () => {
   const toNegativeButton = document.querySelector('#negative-btn');
   toNegativeButton.addEventListener('click', () => {
     processFile('negative');
+  })
+
+  const binaryButton = document.querySelector('#binary-btn');
+  binaryButton.addEventListener('click', () => {
+    processFile('binary');
   })
 
   const image = document.querySelector('.image#image');

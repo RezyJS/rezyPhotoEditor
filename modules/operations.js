@@ -117,7 +117,20 @@ const toNegative = (pixels) => {
   }
 }
 
-const toBinaryColorScheme = (pixels) => {}
+const toBinaryColorScheme = (pixels) => {
+  const binary = document.querySelector("#binary-slider").value;
+
+  for (let i = 0; i < pixels.length; i += 4) {
+    const red = pixels[i] >= binary ? 255 : 0;
+    const green = pixels[i + 1] >= binary ? 255 : 0;
+    const blue = pixels[i + 2] >= binary ? 255 : 0;
+    // const alpha = pixels[i + 3];
+
+    pixels[i] = red;
+    pixels[i + 1] = green;
+    pixels[i + 2] = blue;
+  }
+}
 
 const moreContrast = (pixels) => {}
 
@@ -190,6 +203,9 @@ const processFile = (operation) => {
       break;
     case 'bright':
       toOperate = changeBrightness;
+      break;
+    case 'binary':
+      toOperate = toBinaryColorScheme;
       break;
     case 'revert':
       photoStack.revert();

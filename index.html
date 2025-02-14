@@ -25,42 +25,64 @@
           <img src="public/Bella.jpg" alt="image" class="image" id="image">
         </div>
         <div class="flex-row-gap-20">
-          <button id="prev-state-btn" class="purpleBorder containerLabel">←</button>
-          <button id="next-state-btn" class="purpleBorder containerLabel">→</button>
+          <button id="prev-state-btn" class="purpleBorder containerLabel hover">←</button>
+          <button id="next-state-btn" class="purpleBorder containerLabel hover">→</button>
         </div>
+        <button id="reset-state-btn" class="redBorder containerLabel hover">Reset</button>
       </div>
     </section>
     <div id="separator" class="separator"></div>
     <section id="settings" class="settings-container">
       <div class="flex-row-gap-20">
-      </div>
-      <div class="container">
+      
+        <div class="container">
 
-        <div class="flex-row-gap-20">
-          <button id="grayScale-btn" class="containerLabel">To GrayScale</button>
+          <div class="flex-row-gap-20">
+            <button id="grayScale-btn" class="containerLabel hover">To GrayScale</button>
+          </div>
+
+          <div class="flex-row-gap-20">
+            <button id="negative-btn" class="containerLabel hover">To Negative</button>
+            <div class="slider-container">
+              <input type="range" min="0" max="255" value="0" class="slider" id="negative-slider">
+              <span class="value-display" id="negative-slider-value">0</span>
+            </div>
+          </div> 
+
+          <div class="flex-row-gap-20">
+            <button id="brightness-btn" class="containerLabel hover">Bright Up</button>
+            <div class="slider-container">
+              <input type="range" min="0" max="255" value="0" class="slider" id="brightness-slider">
+              <span class="value-display" id="brightness-slider-value">0</span>
+            </div>
+          </div>
+
+          <div class="flex-row-gap-20">
+            <button id="binary-btn" class="containerLabel hover">Binarization</button>
+            <div class="slider-container">
+              <input type="range" min="0" max="255" value="0" class="slider" id="binary-slider">
+              <span class="value-display" id="binary-slider-value">0</span>
+            </div>
+          </div>
+
         </div>
 
-        <div class="flex-row-gap-20">
-          <button id="negative-btn" class="containerLabel">To Negative</button>
-          <div class="slider-container">
-            <input type="range" min="0" max="255" value="0" class="slider" id="negative-slider">
-            <span class="value-display" id="negative-slider-value">0</span>
-          </div>
-        </div> 
-
-        <div class="flex-row-gap-20">
-          <button id="brightness-btn" class="containerLabel">Bright Up</button>
-          <div class="slider-container">
-            <input type="range" min="0" max="255" value="0" class="slider" id="brightness-slider">
-            <span class="value-display" id="brightness-slider-value">0</span>
-          </div>
-        </div>
-
-        <div class="flex-row-gap-20">
-          <button id="binary-btn" class="containerLabel">Binarization</button>
-          <div class="slider-container">
-            <input type="range" min="0" max="255" value="0" class="slider" id="binary-slider">
-            <span class="value-display" id="binary-slider-value">0</span>
+        <div class="container">
+          <div class="containerLabel flex-row-gap-20">
+            <div class="flex-col gap-20">
+              <button id="more-contrast-btn" class="containerLabel hover">More Contrast</button>
+              <button id="less-contrast-btn" class="containerLabel hover">Less Contrast</button>
+            </div>
+            <div class="flex-col gap-20">
+              <label class="flex-row-gap-20">
+                <div class="header">Q1</div>
+                <input type="number" class="value-picker" id="picker1" min="0" max="255" value="0">
+              </label>
+              <label class="flex-row-gap-20">
+                <div class="header">Q2</div>
+                <input type="number" class="value-picker" id="picker2" min="0" max="255" value="0">
+              </label>
+            </div>
           </div>
         </div>
 

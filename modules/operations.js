@@ -132,9 +132,37 @@ const toBinaryColorScheme = (pixels) => {
   }
 }
 
-const moreContrast = (pixels) => {}
+const moreContrast = (pixels) => {
+  const Q1 = document.querySelector("#picker1.value-picker").value;
+  const Q2 = document.querySelector("#picker2.value-picker").value;
 
-const lessContrast = (pixels) => {}
+  for (let i = 0; i < pixels.length; i += 4) {
+    const red = (pixels[i] - Q1) * 255 / (Q2 - Q1);
+    const green = (pixels[i + 1] - Q1) * 255 / (Q2 - Q1);
+    const blue = (pixels[i + 2] - Q1) * 255 / (Q2 - Q1);
+    // const alpha = pixels[i + 3];
+
+    pixels[i] = red;
+    pixels[i + 1] = green;
+    pixels[i + 2] = blue;
+  }
+}
+
+const lessContrast = (pixels) => {
+  const Q1 = document.querySelector("#picker1.value-picker").value;
+  const Q2 = document.querySelector("#picker2.value-picker").value;
+
+  for (let i = 0; i < pixels.length; i += 4) {
+    const red = (Q1 + pixels[i]) * (Q2 - Q1) / 255;
+    const green = (Q1 + pixels[i + 1]) * (Q2 - Q1) / 255;
+    const blue = (Q1 + pixels[i + 2]) * (Q2 - Q1) / 255;
+    // const alpha = pixels[i + 3];
+
+    pixels[i] = red;
+    pixels[i + 1] = green;
+    pixels[i + 2] = blue;
+  }
+}
 
 const gamma = (pixels) => {}
 
@@ -160,6 +188,11 @@ function storage() {
     ptr = -1;
   }
 
+  function reset() {
+    stack.length = 1;
+    ptr = 0;
+  }
+
   function revert() {
     if (ptr > 0) {
       --ptr;
@@ -176,7 +209,7 @@ function storage() {
     return stack[ptr];
   }
 
-  return { add, newStack, revert, unrevert, getCurrentPhoto };
+  return { add, newStack, revert, unrevert, getCurrentPhoto, reset };
 }
 
 const photoStack = storage();
@@ -207,11 +240,20 @@ const processFile = (operation) => {
     case 'binary':
       toOperate = toBinaryColorScheme;
       break;
+    case 'more-contrast':
+      toOperate = moreContrast;
+      break;
+    case 'less-contrast':
+      toOperate = lessContrast;
+      break;
     case 'revert':
       photoStack.revert();
       break;
     case 'unrevert':
       photoStack.unrevert();
+      break;
+    case 'reset':
+      photoStack.reset();
       break;
     case 'show':
     default:

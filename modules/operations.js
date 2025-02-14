@@ -132,7 +132,7 @@ function storage() {
   }
 
   function revert() {
-    if (ptr > 0) {
+    if (ptr > 1) {
       --ptr;
     }
   }

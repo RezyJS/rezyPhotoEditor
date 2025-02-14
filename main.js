@@ -118,7 +118,6 @@ const main = () => {
       [...ev.dataTransfer.items].forEach((item, i) => {
         if (item.kind === "file" && item.type.startsWith('image/')) {
           const file = item.getAsFile();
-          console.info(file)
           loadNewPhoto(file);
         }
       });
@@ -129,9 +128,11 @@ const main = () => {
     e.target.style.backgroundColor = 'transparent';
   });
 
-  image.addEventListener('input', (e) => {
-    const file = e.target.value[0];
-    if (!file.startsWith('image/')) {
+  const imageHolder = document.querySelector('label#image-holder');
+  imageHolder.addEventListener('input', (e) => {
+    const file = e.target.files[0];
+    if (!file.type.startsWith('image')) {
+      alert('This file is not an image!')
       return;
     }
 

@@ -20,7 +20,7 @@ const imageOperation = (image, callback, spinner) => {
   // Convert the canvas to a Blob and display it
   canvas.toBlob((blob) => {
     const url = URL.createObjectURL(blob);
-    const holder = document.querySelector('#image-holder');
+    const holder = document.querySelector('label#image-holder');
 
     // Remove the existing image
     const existingImage = holder.querySelector('#image');

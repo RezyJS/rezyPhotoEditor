@@ -134,6 +134,9 @@ const main = () => {
     if (!file.startsWith('image/')) {
       return;
     }
-    loadNewPhoto(file);
+
+    const photo = new File([file], file.name, { type: file.type });
+
+    loadNewPhoto(photo);
   })
 }

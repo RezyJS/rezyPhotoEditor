@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="src/styles.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,500,0,0&icon_names=upload" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  <link rel="preload" href="styles.css" as="style">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" as="style">
+  
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap">
+
   <title>Rezy Photo Editor</title>
 </head>
 <body>
@@ -16,36 +15,31 @@
   </header>
   <main>
     <section id="images" class="images-container">
-      <div id="original-photo" style="display: flex; flex-direction: column; gap:20px;">
-        <div class="disabled loader" id="original-spinner"></div>
-        <img src="public/Bella.jpg" alt="original image" class="image" id="original-image">
-      </div>
-      <div id="changed-photo" style="display: flex; flex-direction: column; gap:20px;">
-        <div class="disabled loader" id="changed-spinner"></div>
-        <img src="public/Bella.jpg" alt="changed image" class="image" id="changed-image">
+      <div id="photo" class="flex-col gap-20">
+        <div class="flex-col">
+          <div id="helpful-text-above-image" class="header">Drop photo here</div>
+          <div class="header">↓</div>
+        </div>
+        <div class="disabled loader" id="spinner"></div>
+        <div id="image-holder">
+          <img src="public/Bella.jpg" alt="image" class="image" id="image">
+        </div>
+        <div class="flex-row-gap-20">
+          <button id="prev-state-btn" class="purpleBorder containerLabel">←</button>
+          <button id="next-state-btn" class="purpleBorder containerLabel">→</button>
+        </div>
       </div>
     </section>
     <div id="separator" class="separator"></div>
     <section id="settings" class="settings-container">
       <div class="flex-row-gap-20">
-        <label class="image-uploader">
-          <input type="file" id="image-input"/>
-          <img src="public/upload.svg" alt="upload icon" class="upload-icon">
-          Upload your photo
-        </label>
       </div>
       <div class="container">
-        <button id="grayScale" class="containerLabel">To GrayScale</button>
-      </div>
-      <div class="container">
-        <button id="negative" class="containerLabel">To Negative</button>
-      </div>
-      <div class="container">
-        <button id="cancel" class="redBorder containerLabel">Cancel</button>
+        <button id="grayScale-btn" class="containerLabel">To GrayScale</button>
+        <button id="negative-btn" class="containerLabel">To Negative</button>
       </div>
       </section>
   </main>
-  <script defer src="src/main.js" />
-  <script src="https://cdn.jsdelivr.net/npm/exifr/dist/lite.umd.js"></script>
+  <script src="main.js" type="module"/>
 </body>
 </html>

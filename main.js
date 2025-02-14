@@ -128,4 +128,12 @@ const main = () => {
   image.addEventListener('dragleave', (e) => {
     e.target.style.backgroundColor = 'transparent';
   });
+
+  image.addEventListener('input', (e) => {
+    const file = e.target.value[0];
+    if (!file.startsWith('image/')) {
+      return;
+    }
+    loadNewPhoto(file);
+  })
 }

@@ -17,12 +17,15 @@
     <section id="images" class="images-container">
       <div id="photo" class="flex-col gap-20">
         <div class="flex-col">
-          <div id="helpful-text-above-image" class="header">Drop photo here</div>
+          <div id="helpful-text-above-image" class="header">Drop photo<br/>or click<br/> here</div>
           <div class="header">↓</div>
         </div>
         <div class="disabled loader" id="spinner"></div>
         <div id="image-holder">
-          <img src="public/Bella.jpg" alt="image" class="image" id="image">
+          <label>
+            <img src="public/Bella.jpg" alt="image" class="image" id="image">
+            <input type="file" style="display: none;">
+          </label>
         </div>
         <div class="flex-row-gap-20">
           <button id="prev-state-btn" class="purpleBorder containerLabel hover">←</button>

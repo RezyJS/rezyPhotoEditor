@@ -38,11 +38,10 @@ main {
 .images-container {
   width: 500px;
   display: flex;
-  gap: 20px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0px 20px 0px 20px
+  padding: 0px 10px 0px 10px
 }
 
 .image {
@@ -57,6 +56,10 @@ main {
   font-weight: 400;
   color: #A288A6;
   padding: 10px;
+
+  &:hover {
+    background-color: #826e85;;
+  }
 }
 
 .flex-row-gap-20 {

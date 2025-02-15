@@ -88,7 +88,7 @@ const makeHistogram = (pixels) => {}
 
 const changeBrightness = (pixels) => {
   const clamp = (num) => Math.min(Math.max(num, 0), 255);
-  const brightness = document.querySelector("#brightness-slider").value;
+  const brightness = +(document.querySelector("#brightness-slider").value);
 
   for (let i = 0; i < pixels.length; i += 4) {
     const red = clamp(pixels[i] + brightness);
@@ -103,7 +103,7 @@ const changeBrightness = (pixels) => {
 }
 
 const toNegative = (pixels) => {
-  const negative = document.querySelector("#negative-slider").value;
+  const negative = +(document.querySelector("#negative-slider").value);
 
   for (let i = 0; i < pixels.length; i += 4) {
     const red = pixels[i] >= negative ? 255 - pixels[i] : pixels[i];
@@ -118,7 +118,7 @@ const toNegative = (pixels) => {
 }
 
 const toBinaryColorScheme = (pixels) => {
-  const binary = document.querySelector("#binary-slider").value;
+  const binary = +(document.querySelector("#binary-slider").value);
 
   for (let i = 0; i < pixels.length; i += 4) {
     const red = pixels[i] >= binary ? 255 : 0;
@@ -133,8 +133,8 @@ const toBinaryColorScheme = (pixels) => {
 }
 
 const moreContrast = (pixels) => {
-  const Q1 = document.querySelector("#picker1.value-picker").value;
-  const Q2 = document.querySelector("#picker2.value-picker").value;
+  const Q1 = +(document.querySelector("#picker1.value-picker").value);
+  const Q2 = +(document.querySelector("#picker2.value-picker").value);
 
   for (let i = 0; i < pixels.length; i += 4) {
     const red = (pixels[i] - Q1) * 255 / (Q2 - Q1);
@@ -149,8 +149,8 @@ const moreContrast = (pixels) => {
 }
 
 const lessContrast = (pixels) => {
-  const Q1 = document.querySelector("#picker1.value-picker").value;
-  const Q2 = document.querySelector("#picker2.value-picker").value;
+  const Q1 = +(document.querySelector("#picker1.value-picker").value);
+  const Q2 = +(document.querySelector("#picker2.value-picker").value);
 
   for (let i = 0; i < pixels.length; i += 4) {
     const red = (Q1 + pixels[i]) * (Q2 - Q1) / 255;

@@ -220,7 +220,7 @@ const photoStack = storage();
 
 const processFile = (operation) => {
   // Change photo to spinner
-  const photoHolder = document.querySelector('#image.image');
+  const photoHolder = document.querySelector('.image');
   if (photoHolder) {
     photoHolder.classList.add('disabled');
   }

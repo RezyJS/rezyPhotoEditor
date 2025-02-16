@@ -17,12 +17,10 @@ const main = () => {
 
       // Enforce picker1 ≤ picker2
       if (val1 > val2) {
-        contrastPickerUpper.value = val1;
-        val2 = val1;
+        contrastPickerLower.value = val2;
       }
       if (val2 < val1) {
-        contrastPickerLower.value = val2;
-        val1 = val2;
+        contrastPickerUpper.value = val1;
       }
 
       // Update constraints

@@ -7,102 +7,108 @@ window.addEventListener('load', () => {
 });
 
 const main = () => {
-  const picker1 = document.getElementById('picker1');
-  const picker2 = document.getElementById('picker2');
+  const contrastPickerLower = document.getElementById('picker-contrast-lower');
+  const contrastPickerUpper = document.getElementById('picker-contrast-upper');
 
   function updatePickerConstraints() {
       // Ensure values stay within 0-255 range
-      let val1 = Math.min(255, Math.max(0, parseInt(picker1.value) || 0));
-      let val2 = Math.min(255, Math.max(0, parseInt(picker2.value) || 0));
+      let val1 = Math.min(255, Math.max(0, parseInt(contrastPickerLower.value) || 0));
+      let val2 = Math.min(255, Math.max(0, parseInt(contrastPickerUpper.value) || 0));
 
       // Enforce picker1 ≤ picker2
       if (val1 > val2) {
-          picker2.value = val1;
-          val2 = val1;
+        contrastPickerUpper.value = val1;
+        val2 = val1;
       }
       if (val2 < val1) {
-          picker1.value = val2;
-          val1 = val2;
+        contrastPickerLower.value = val2;
+        val1 = val2;
       }
 
       // Update constraints
-      picker2.min = val1;
-      picker1.max = val2;
+      contrastPickerUpper.min = val1;
+      contrastPickerLower.max = val2;
   }
 
-  picker1.addEventListener('input', updatePickerConstraints);
-  picker2.addEventListener('input', updatePickerConstraints);
+  contrastPickerLower.addEventListener('input', updatePickerConstraints);
+  contrastPickerUpper.addEventListener('input', updatePickerConstraints);
 
-  const negativeSlider = document.querySelector("#negative-slider");
-  const negativeOutput = document.querySelector("#negative-slider-value");
+  const negativeSlider = document.querySelector("#slider-negative");
+  const negativeOutput = document.querySelector("#slider-negative-value");
   negativeOutput.innerHTML = negativeSlider.value;
   negativeSlider.oninput = function() {
     negativeOutput.innerHTML = this.value;
   }
 
-  const binarySlider = document.querySelector("#binary-slider");
-  const binaryOutput = document.querySelector("#binary-slider-value");
+  const binarySlider = document.querySelector("#slider-binarization");
+  const binaryOutput = document.querySelector("#slider-binarization-value");
   binaryOutput.innerHTML = binarySlider.value;
   binarySlider.oninput = function() {
     binaryOutput.innerHTML = this.value;
   }
 
-  const brightnessSlider = document.querySelector("#brightness-slider");
-  const brightnessOutput = document.querySelector("#brightness-slider-value");
+  const brightnessSlider = document.querySelector("#slider-brightness");
+  const brightnessOutput = document.querySelector("#slider-brightness-value");
   brightnessOutput.innerHTML = brightnessSlider.value;
   brightnessSlider.oninput = function() {
     brightnessOutput.innerHTML = this.value;
   }
 
-  const moreContrastButton = document.querySelector('#more-contrast-btn');
+  const moreContrastButton = document.querySelector('#btn-contrast-more');
   moreContrastButton.addEventListener('click', () => {
     processFile('more-contrast')
   })
 
-  const lessContrastButton = document.querySelector('#less-contrast-btn');
+  const lessContrastButton = document.querySelector('#btn-contrast-less');
   lessContrastButton.addEventListener('click', () => {
     processFile('less-contrast')
   })
   
-  const brightnessButton = document.querySelector('#brightness-btn');
+  const brightnessButton = document.querySelector('#btn-brightness');
   brightnessButton.addEventListener('click', () => {
     processFile('bright')
   })
 
-  const revertButton = document.querySelector('#prev-state-btn'); 
+  const revertButton = document.querySelector('#btn-stack-revert'); 
   revertButton.addEventListener('click', () => {
     processFile('revert')
   })
   
-  const unrevertButton = document.querySelector('#next-state-btn'); 
+  const unrevertButton = document.querySelector('#btn-stack-unrevert'); 
   unrevertButton.addEventListener('click', () => {
     processFile('unrevert')
   })
 
-  const cancelButton = document.querySelector('#reset-state-btn');
+  const cancelButton = document.querySelector('#btn-stack-reset');
   cancelButton.addEventListener('click', () => {
     processFile('reset')
   })
 
-  const toGrayScaleButton = document.querySelector('#grayScale-btn');
+  const enlargeButton = document.querySelector('#btn-enlarge');
+  enlargeButton.addEventListener('click', () => {
+    alert('WIP');
+  })
+
+  const toGrayScaleButton = document.querySelector('#btn-grayscale');
   toGrayScaleButton.addEventListener('click', () => {
     processFile('grayscale');
   })
 
-  const toNegativeButton = document.querySelector('#negative-btn');
+  const toNegativeButton = document.querySelector('#btn-negative');
   toNegativeButton.addEventListener('click', () => {
     processFile('negative');
   })
 
-  const binaryButton = document.querySelector('#binary-btn');
+  const binaryButton = document.querySelector('#btn-binarization');
   binaryButton.addEventListener('click', () => {
     processFile('binary');
   })
 
-  const image = document.querySelector('.image#image');
+  const image = document.querySelector('.image');
+  console.info(image)
   image.addEventListener('dragenter', (e) => {
     e.target.style.backgroundColor = '#A288A6';
-  });
+  }); 
 
   image.addEventListener('dragover', (e) => {
     e.preventDefault();
@@ -128,7 +134,7 @@ const main = () => {
     e.target.style.backgroundColor = 'transparent';
   });
 
-  const imageHolder = document.querySelector('label#image-holder');
+  const imageHolder = document.querySelector('#image-holder');
   imageHolder.addEventListener('input', (e) => {
     const file = e.target.files[0];
     if (!file.type.startsWith('image')) {

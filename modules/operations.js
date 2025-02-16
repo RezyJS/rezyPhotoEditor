@@ -23,14 +23,13 @@ const imageOperation = (image, callback, spinner) => {
     const holder = document.querySelector('label#image-holder');
 
     // Remove the existing image
-    const existingImage = holder.querySelector('#image');
+    const existingImage = holder.querySelector('.image');
     if (existingImage) {
       holder.removeChild(existingImage);
     }
 
     // Create a new image element
     const obj = document.createElement('img');
-    obj.id = 'image';
     obj.classList.add('image');
     obj.src = url;
 
@@ -133,8 +132,8 @@ const toBinaryColorScheme = (pixels) => {
 }
 
 const moreContrast = (pixels) => {
-  const Q1 = +(document.querySelector("#picker-contrast-upper.value-picker").value);
-  const Q2 = +(document.querySelector("#picker-contrast-lower.value-picker").value);
+  const Q1 = +(document.querySelector("#picker-contrast-upper").value);
+  const Q2 = +(document.querySelector("#picker-contrast-lower").value);
 
   for (let i = 0; i < pixels.length; i += 4) {
     const red = (pixels[i] - Q1) * 255 / (Q2 - Q1);
@@ -149,8 +148,8 @@ const moreContrast = (pixels) => {
 }
 
 const lessContrast = (pixels) => {
-  const Q1 = +(document.querySelector("#picker-contrast-upper.value-picker").value);
-  const Q2 = +(document.querySelector("#picker-contrast-lower.value-picker").value);
+  const Q1 = +(document.querySelector("#picker-contrast-upper").value);
+  const Q2 = +(document.querySelector("#picker-contrast-lower").value);
 
   for (let i = 0; i < pixels.length; i += 4) {
     const red = (Q1 + pixels[i]) * (Q2 - Q1) / 255;

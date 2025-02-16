@@ -218,6 +218,14 @@ function storage() {
 const photoStack = storage();
 
 const processFile = (operation) => {
+
+  if (photoStack.isEmpty()) {
+    alert('No photos loaded!')
+    spinner.classList.add('disabled');
+    photoHolder.classList.remove('disabled');
+    return;
+  }
+
   // Change photo to spinner
   const photoHolder = document.querySelector('.image');
   if (photoHolder) {
@@ -264,13 +272,6 @@ const processFile = (operation) => {
   }
 
   // Get the last image from the stack
-  if (photoStack.isEmpty()) {
-    alert('No photos loaded!')
-    spinner.classList.add('disabled');
-    photoHolder.classList.remove('disabled');
-    return;
-  }
-
   const image = photoStack.getCurrentPhoto();
   if (image instanceof HTMLImageElement) {
     imageOperation(image, toOperate, spinner);

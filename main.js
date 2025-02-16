@@ -103,7 +103,6 @@ const main = () => {
   })
 
   const image = document.querySelector('.image');
-  console.info(image)
   image.addEventListener('dragenter', (e) => {
     e.target.style.backgroundColor = '#A288A6';
   }); 

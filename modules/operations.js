@@ -267,6 +267,7 @@ const processFile = (operation) => {
   if (photoStack.isEmpty()) {
     alert('No photos loaded!')
     spinner.classList.add('disabled');
+    photoHolder.classList.remove('disabled');
     return;
   }
 

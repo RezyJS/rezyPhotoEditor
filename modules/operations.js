@@ -49,7 +49,7 @@ const imageOperation = (image, callback, spinner) => {
 
       if (ev.dataTransfer.items) {
         [...ev.dataTransfer.items].forEach((item) => {
-          if (item.kind === 'file' && item.type.startsWith('image/')) {
+          if (item.kind === 'file' && item.type.startsWith('image')) {
             const file = item.getAsFile();
             loadNewPhoto(file); // Load the dropped image
           }
@@ -284,17 +284,6 @@ const loadNewPhoto = (photo) => {
 }
 
 const loadPhoto = (photo) => {
-  // Change photo to spinner
-  const photoHolder = document.querySelector('.image');
-  if (photoHolder) {
-    photoHolder.classList.add('disabled');
-  }
-
-  const spinner = document.querySelector('.spinner');
-  if (spinner) {
-    spinner.classList.remove('disabled');
-  }
-
   const reader = new FileReader();
 
   reader.onload = (e) => {

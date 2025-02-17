@@ -119,7 +119,7 @@ const main = () => {
 
     if (ev.dataTransfer.items) {
       [...ev.dataTransfer.items].forEach((item, i) => {
-        if (item.kind === "file" && item.type.startsWith('image/')) {
+        if (item.type.startsWith('image')) {
           const file = item.getAsFile();
           loadNewPhoto(file);
         }

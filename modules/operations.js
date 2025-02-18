@@ -20,30 +20,44 @@ const imageOperation = (image, callback, spinner) => {
   // Convert the canvas to a Blob and display it
   canvas.toBlob((blob) => {
     const url = URL.createObjectURL(blob);
-    const holder = document.querySelector('label#image-holder');
+    const holder1 = document.querySelector('label#image-holder');
+    const holder2 = document.querySelector('.image_dialog')
 
     // Remove the existing image
-    const existingImage = holder.querySelector('.image');
-    if (existingImage) {
-      holder.removeChild(existingImage);
+    const existingImage1 = holder1.querySelector('#image');
+    const existingImage2 = holder2.querySelector('#image');
+    
+    if (existingImage1) {
+      holder1.removeChild(existingImage1);
+    }
+
+    if (existingImage2) {
+      holder2.removeChild(existingImage2);
     }
 
     // Create a new image element
-    const obj = document.createElement('img');
-    obj.classList.add('image');
-    obj.src = url;
+    const obj1 = document.createElement('img');
+    const obj2 = document.createElement('img');
+
+    obj1.id = 'image';
+    obj1.classList.add('image');
+    obj1.src = url;
+
+    obj2.id = 'image';
+    obj2.classList.add('image_dialog__image');
+    obj2.src = url;
 
     // Add event listeners for drag-and-drop
-    obj.addEventListener('dragenter', (e) => {
+    obj1.addEventListener('dragenter', (e) => {
       e.target.style.backgroundColor = '#A288A6';
     });
 
-    obj.addEventListener('dragover', (e) => {
+    obj1.addEventListener('dragover', (e) => {
       e.preventDefault();
       e.dataTransfer.dropEffect = 'copy';
     });
 
-    obj.addEventListener('drop', (ev) => {
+    obj1.addEventListener('drop', (ev) => {
       ev.preventDefault();
       ev.target.style.backgroundColor = 'transparent';
 
@@ -57,15 +71,16 @@ const imageOperation = (image, callback, spinner) => {
       }
     });
 
-    obj.addEventListener('dragleave', (e) => {
+    obj1.addEventListener('dragleave', (e) => {
       e.target.style.backgroundColor = 'transparent';
     });
 
-    holder.appendChild(obj); // Add the new image to the holder
+    holder1.appendChild(obj1); // Add the new image to the holder
+    holder2.appendChild(obj2);
 
     spinner.classList.add('disabled'); // Hide the spinner
 
-    if (callback !== null) photoStack.add(obj);
+    if (callback !== null) photoStack.add(obj1);
   }, 'image/jpeg');
 };
 
@@ -223,6 +238,11 @@ const processFile = (operation) => {
     alert('No photos loaded!')
     spinner.classList.add('disabled');
     photoHolder.classList.remove('disabled');
+    return;
+  }
+
+  if (operation === 'enlarge') {
+    document.querySelector('#dialog').classList.remove('disabled');
     return;
   }
 

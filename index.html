@@ -12,6 +12,22 @@
   <title>Rezy Photo Editor</title>
 </head>
 <body class="container_vertical container_vertical_top container_vertical_center-X">
+  <div class="disabled container container_vertical container_vertical_top container_vertical_center-X container_absolute__dialog_full-screen" id="dialog">
+    <!-- Close modal button -->
+    <div class="container_width container_horizontal container_horizontal_right">
+      <div class="button button__danger container_margin" id="closeModal">&cross;</div>
+    </div>
+    <!-- Content -->
+    <div class="image_dialog">
+      <img src="public/Bella.jpg" alt="image" class="image_dialog__image" id="image">
+    </div>
+  </div>
+  <!-- <div class="container_absolute__dialog_full-screen container_vertical container_vertical_center-Y">
+    <div class="text_black">
+      test
+    </div>
+  </div> -->
+
   <header class="container_horizontal container_horizontal_center-X container_padding-vertical text_secondary text_big-font text_bold">
     Rezy's photo editor
   </header>
@@ -28,7 +44,7 @@
       <div class="spinner disabled"></div>
       <!-- Image -->
       <label class="container_vertical container_vertical_center-X" id="image-holder">
-        <img src="public/Bella.jpg" alt="image" class="image">
+        <img src="public/Bella.jpg" alt="image" class="image" id="image">
         <input type="file">
       </label>
 

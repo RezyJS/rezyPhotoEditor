@@ -7,6 +7,8 @@ window.addEventListener('load', () => {
 });
 
 const main = () => {
+  const dialog = document.querySelector('#dialog')
+
   const contrastPickerLower = document.getElementById('picker-contrast-lower');
   const contrastPickerUpper = document.getElementById('picker-contrast-upper');
 
@@ -84,7 +86,7 @@ const main = () => {
 
   const enlargeButton = document.querySelector('#btn-enlarge');
   enlargeButton.addEventListener('click', () => {
-    alert('WIP');
+    processFile('enlarge');
   })
 
   const toGrayScaleButton = document.querySelector('#btn-grayscale');
@@ -142,5 +144,10 @@ const main = () => {
     const photo = new File([file], file.name, { type: file.type });
 
     loadNewPhoto(photo);
+  })
+
+  const cancelDialogButton = document.querySelector('#closeModal');
+  cancelDialogButton.addEventListener('click', () => {
+    dialog.classList.add('disabled');
   })
 }

@@ -7,7 +7,7 @@ window.addEventListener('load', () => {
 });
 
 const main = () => {
-  const dialog = document.querySelector('#dialog')
+  const imageDialog = document.querySelector('#image_dialog')
 
   const contrastPickerLower = document.getElementById('picker-contrast-lower');
   const contrastPickerUpper = document.getElementById('picker-contrast-upper');
@@ -62,6 +62,11 @@ const main = () => {
   const lessContrastButton = document.querySelector('#btn-contrast-less');
   lessContrastButton.addEventListener('click', () => {
     processFile('less-contrast')
+  })
+
+  const makeHistogramButton = document.querySelector('#histogramCreation');
+  makeHistogramButton.addEventListener('click', () => {
+    processFile('histogram');
   })
   
   const brightnessButton = document.querySelector('#btn-brightness');
@@ -148,6 +153,6 @@ const main = () => {
 
   const cancelDialogButton = document.querySelector('#closeModal');
   cancelDialogButton.addEventListener('click', () => {
-    dialog.classList.add('disabled');
+    imageDialog.classList.add('disabled');
   })
 }

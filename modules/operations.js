@@ -98,7 +98,72 @@ const toGrayScale = (pixels) => {
   }
 }
 
-const makeHistogram = (pixels) => {}
+const makeHistogram = (image) => {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  // Set canvas size to match the image
+  canvas.width = image.width;
+  canvas.height = image.height;
+
+  // Draw the image onto the canvas
+  ctx.drawImage(image, 0, 0);
+
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const pixels = imageData.data;
+
+  // Initialize histogram array
+  const histogram = new Array(256).fill(0);
+
+  // Populate histogram using the grayscale values (assume grayscale image)
+  for (let i = 0; i < pixels.length; i += 4) {
+    const gray = pixels[i]; // Grayscale value is in the red channel (all channels are equal)
+    histogram[gray]++;
+  }
+
+  // Create histogram visualization canvas with padding
+  const padding = 20; // 20px padding
+  const histCanvas = document.createElement('canvas');
+  histCanvas.width = 256 + padding * 2; // Add padding to both sides
+  histCanvas.height = 100 + padding * 2; // Add padding to top and bottom
+  const histCtx = histCanvas.getContext('2d');
+
+  // Clear canvas with white background
+  histCtx.fillStyle = '#1c1d21';
+  histCtx.fillRect(0, 0, histCanvas.width, histCanvas.height);
+
+  // Find maximum histogram value for normalization
+  const maxCount = Math.max(...histogram);
+
+  // Draw histogram bars with padding
+  for (let i = 0; i < 256; i++) {
+    const barHeight = (histogram[i] / maxCount) * (histCanvas.height - padding * 2); // Adjust height for padding
+    const x = i + padding; // Shift bars right by padding
+    const y = histCanvas.height - padding - barHeight; // Shift bars up by padding
+
+    // Set the bar color to the grayscale intensity (i)
+    histCtx.fillStyle = `rgb(${i}, ${i}, ${i})`; // Grayscale color
+    histCtx.fillRect(x, y, 1, barHeight);
+  }
+
+  console.info(histogram);
+
+  // Convert to image and display
+  histCanvas.toBlob((blob) => {
+    const url = URL.createObjectURL(blob);
+    const histHolder = document.querySelector('#col2');
+
+    // Remove existing image
+    const existingImage = histHolder.querySelector('#histHolder');
+    if (existingImage) histHolder.removeChild(existingImage);
+
+    // Create new image element
+    const img = document.createElement('img');
+    img.id = 'histHolder';
+    img.src = url;
+    histHolder.appendChild(img);
+  }, 'image/png');
+};
 
 const changeBrightness = (pixels) => {
   const clamp = (num) => Math.min(Math.max(num, 0), 255);
@@ -150,6 +215,8 @@ const moreContrast = (pixels) => {
   const Q1 = +(document.querySelector("#picker-contrast-upper").value);
   const Q2 = +(document.querySelector("#picker-contrast-lower").value);
 
+  console.info(Q1 + " " + Q2);
+
   for (let i = 0; i < pixels.length; i += 4) {
     const red = (pixels[i] - Q1) * 255 / (Q2 - Q1);
     const green = (pixels[i + 1] - Q1) * 255 / (Q2 - Q1);
@@ -165,6 +232,10 @@ const moreContrast = (pixels) => {
 const lessContrast = (pixels) => {
   const Q1 = +(document.querySelector("#picker-contrast-upper").value);
   const Q2 = +(document.querySelector("#picker-contrast-lower").value);
+
+  console.info(Q1 + " " + Q2);
+  console.info(Q2 - Q1);
+  console.info(Q1 + pixels[0]) * (Q2 - Q1) / 255
 
   for (let i = 0; i < pixels.length; i += 4) {
     const red = (Q1 + pixels[i]) * (Q2 - Q1) / 255;
@@ -234,6 +305,9 @@ const photoStack = storage();
 
 const processFile = (operation) => {
 
+  const photoHolder = document.querySelector('.image');
+  const spinner = document.querySelector('.spinner');
+
   if (photoStack.isEmpty()) {
     alert('No photos loaded!')
     spinner.classList.add('disabled');
@@ -242,23 +316,24 @@ const processFile = (operation) => {
   }
 
   if (operation === 'enlarge') {
-    document.querySelector('#dialog').classList.remove('disabled');
+    document.querySelector('#image_dialog').classList.remove('disabled');
     return;
   }
 
-  // Change photo to spinner
-  const photoHolder = document.querySelector('.image');
-  if (photoHolder) {
+  // Change photo to spinner  
+  if (photoHolder && operation !== 'histogram') {
     photoHolder.classList.add('disabled');
   }
 
-  const spinner = document.querySelector('.spinner');
-  if (spinner) {
+  if (spinner && operation !== 'histogram') {
     spinner.classList.remove('disabled');
   }
 
   let toOperate = null;
   switch (operation) {
+    case 'histogram':
+      makeHistogram(photoStack.getCurrentPhoto());
+      return;
     case 'grayscale':
       toOperate = toGrayScale;
       break;
@@ -293,7 +368,7 @@ const processFile = (operation) => {
 
   // Get the last image from the stack
   const image = photoStack.getCurrentPhoto();
-  if (image instanceof HTMLImageElement) {
+  if (image instanceof HTMLImageElement) {    
     imageOperation(image, toOperate, spinner);
   }
 };

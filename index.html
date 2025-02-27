@@ -12,12 +12,12 @@
   <title>Rezy Photo Editor</title>
 </head>
 <body class="container_vertical container_vertical_top container_vertical_center-X">
-  <div class="disabled container container_vertical container_vertical_top container_vertical_center-X container_absolute__dialog_full-screen" id="dialog">
+  <div class="disabled container container_vertical container_vertical_top container_vertical_center-X container_absolute__dialog_full-screen" id="image_dialog">
     <!-- Close modal button -->
     <div class="container_width container_horizontal container_horizontal_right">
       <div class="button button__danger container_margin" id="closeModal">&cross;</div>
     </div>
-    <!-- Content -->
+    <!-- Image Dialog Content -->
     <div class="image_dialog">
       <img src="public/Bella.jpg" alt="image" class="image_dialog__image" id="image">
     </div>
@@ -62,62 +62,75 @@
     <!-- Separator -->
     <div class="container__separator container container_vertical container_vertical_center-Y"></div>
     
-    <section class="container_horizontal container_horizontal_left container_vertical_left container_gap container_padding-horizontal">
-      <!-- Buttons and sliders -->
-      <div class="container_vertical container_vertical_top container_gap">
-        <div class="card-bordered container_vertical container_gap">
-          <div id="btn-grayscale" class="button button__default">
-            To GrayScale
+    <details class="container_horizontal container_padding-horizontal">
+      <summary style="margin-bottom: 20px;">Straight changes</summary>
+      <section class="container_horizontal container_horizontal_left container_vertical_left container_gap container_padding-horizontal">
+        <!-- Buttons and sliders -->
+        <div class="container_vertical container_vertical_top container_gap" id="col1">
+          <div class="card-bordered container_vertical container_gap">
+            <div id="btn-grayscale" class="button button__default">
+              To GrayScale
+            </div>
           </div>
-        </div>
-  
-        <div class="card-bordered container_vertical container_gap">
-          <div class="button button__default" id="btn-negative">To Negative</div>
-          <div class="container_horizontal container_gap">
-            <input type="range" min="0" max="255" value="0" id="slider-negative">
-            <span id="slider-negative-value" class="slider__input">0</span>
-          </div>
-        </div>
-
-        <div class="card-bordered container_vertical container_gap">
-          <div class="button button__default" id="btn-brightness">Make brighter</div>
-          <div class="container_horizontal container_gap">
-            <input type="range" min="0" max="255" value="0" id="slider-brightness">
-            <span id="slider-brightness-value" class="slider__input">0</span>
-          </div>
-        </div>
-
-        <div class="card-bordered container_vertical container_gap">
-          <div class="button button__default" id="btn-binarization">Binarization</div>
-          <div class="container_horizontal container_gap">
-            <input type="range" min="0" max="255" value="0" id="slider-binarization">
-            <span id="slider-binarization-value" class="slider__input">0</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="container_vertical container_vertical_top container_gap">
-        <div class="card-bordered container_horizontal container_horizontal_center-X container_gap">
-          <div class="container_vertical container_gap">
-            <div class="button button__default" id="btn-contrast-more">More contrast</div>
-            <div class="button button__default" id="btn-contrast-less">Less contrast</div>
+    
+          <div class="card-bordered container_vertical container_gap">
+            <div class="button button__default" id="btn-negative">To Negative</div>
+            <div class="container_horizontal container_gap">
+              <input type="range" min="0" max="255" value="0" id="slider-negative">
+              <span id="slider-negative-value" class="slider__input">0</span>
+            </div>
           </div>
 
           <div class="card-bordered container_vertical container_gap">
-            <label class="container_horizontal container_horizontal_center-X container_gap">
-              <div class="text_secondary text_normal-font text_bold">Upper</div>
-              <input type="number" class="value-picker" id="picker-contrast-upper" min="0" max="255" value="255">
-            </label>
+            <div class="button button__default" id="btn-brightness">Make brighter</div>
+            <div class="container_horizontal container_gap">
+              <input type="range" min="0" max="255" value="0" id="slider-brightness">
+              <span id="slider-brightness-value" class="slider__input">0</span>
+            </div>
+          </div>
 
-            <label class="container_horizontal container_horizontal_center-X container_gap">
-              <div class="text_secondary text_normal-font text_bold">Lower</div>
-              <input type="number" class="value-picker" id="picker-contrast-lower" min="0" max="255" value="0">
-            </label>
+          <div class="card-bordered container_vertical container_gap">
+            <div class="button button__default" id="btn-binarization">Binarization</div>
+            <div class="container_horizontal container_gap">
+              <input type="range" min="0" max="255" value="0" id="slider-binarization">
+              <span id="slider-binarization-value" class="slider__input">0</span>
+            </div>
           </div>
         </div>
-      </div>
 
-    </section>
+        <div class="container_vertical container_vertical_top container_gap" id="col2">
+          <div class="card-bordered container_horizontal container_horizontal_center-Y container_horizontal_center-X container_gap">
+            <div class="container_vertical container_gap">
+              <div class="button button__default" id="btn-contrast-more">More contrast</div>
+              <div class="button button__default" id="btn-contrast-less">Less contrast</div>
+            </div>
+
+            <div class="card-bordered container_vertical container_gap">
+              <label class="container_horizontal container_horizontal_center-X container_gap">
+                <div class="text_secondary text_normal-font text_bold">Upper</div>
+                <input type="number" class="value-picker" id="picker-contrast-upper" min="0" max="255" value="255">
+              </label>
+
+              <label class="container_horizontal container_horizontal_center-X container_gap">
+                <div class="text_secondary text_normal-font text_bold">Lower</div>
+                <input type="number" class="value-picker" id="picker-contrast-lower" min="0" max="255" value="0">
+              </label>
+            </div>
+          </div>
+
+          <div class="card-bordered container_vertical container_gap">
+            <div class="button button__default" id="histogramCreation">
+              Make Histogram
+            </div>
+            <p class="text_left">Note: Only works with grayscale (UB* otherwise)</p>
+            <p class="text_left">*UB = Undefined behavior</p>
+          </div>
+
+          <img src="" alt="test for hist" id="histHolder">
+        </div>
+
+      </section>
+    </details>
   </main>
 
   <script src="main.js" type="module"></script>

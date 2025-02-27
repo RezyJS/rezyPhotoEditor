@@ -231,6 +231,10 @@
   color: black;
 }
 
+.text_left {
+  text-align: left;
+}
+
 /* Initial styles */
 * {
   margin: 0;
